@@ -1,23 +1,17 @@
 class Solution {
-    //variation of "Max Chunks To Make Array Sorted 2" question
+    //better approach // O(1) space
     public int partitionDisjoint(int[] nums) {
-        int n = nums.length;
-        //1. right min creation
-        int[] rightmin = new int[n];
-        
-        rightmin[n-1] = nums[n-1];
-        for(int i=n-2;i>=0;i--){
-            rightmin[i] = Math.min(nums[i], rightmin[i+1]);
-        }
-        
-        //2. travel and solve, also maintain left max simontaneously
-        int leftmax = Integer.MIN_VALUE;
+        int leftMax = nums[0];
+        int maxInRun = nums[0];
         int ans = 0;
-        for(int i=0;i<n-1;i++){
-            leftmax = Math.max(leftmax, nums[i]);
-            if(leftmax<=rightmin[i+1]){
+        
+        for(int i =1;i<nums.length;i++){
+            if(nums[i]>maxInRun){
+                maxInRun = nums[i];
+            }
+            else if(nums[i]<leftMax){
                 ans = i;
-                break;
+                leftMax = maxInRun;
             }
         }
         return ans+1;
