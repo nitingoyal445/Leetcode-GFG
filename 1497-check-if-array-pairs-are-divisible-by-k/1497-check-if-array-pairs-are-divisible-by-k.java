@@ -10,7 +10,6 @@ class Solution {
             }
 		    map.put(rem, map.getOrDefault(rem, 0) + 1);
 		}
-		
 		for(int val : arr){
 		    int rem = val%k;
             if(rem < 0){
@@ -29,9 +28,6 @@ class Solution {
 		    }else{
 		        int freq = map.get(rem);
                 int oFreq = map.getOrDefault(k-rem,0);
-                if(rem<0){
-                    oFreq = map.getOrDefault(k+rem,0);
-                }
 		        if(freq!=oFreq){
 		            return false;
 		        }
