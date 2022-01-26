@@ -24,7 +24,6 @@ class Solution {
                     set.add(str[i]);
                 }
             }
-            
         }
         return true;
     }
