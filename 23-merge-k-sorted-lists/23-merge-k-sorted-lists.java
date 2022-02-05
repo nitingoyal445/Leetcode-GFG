@@ -8,28 +8,61 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-public class Solution {
-    public ListNode mergeKLists(ListNode[] lists) {
-        if (lists == null || lists.length == 0) return null;
-        return sort(lists, 0, lists.length - 1);
-    }
+class Solution {
     
-    private ListNode sort(ListNode[] lists, int lo, int hi) {
-        if (lo >= hi) return lists[lo];
-        int mid = lo + (hi - lo) / 2;
-        ListNode l1 = sort(lists, lo, mid);
-        ListNode l2 = sort(lists, mid + 1, hi);
-        return merge(l1, l2);
-    }
-    
-    private ListNode merge(ListNode l1, ListNode l2) {
-        if (l1 == null) return l2;
-        if (l2 == null) return l1;
-        if (l1.val < l2.val) {
-            l1.next = merge(l1.next, l2);
-            return l1;
+    class Pair implements Comparable<Pair>{
+        int li;
+        ListNode node;
+        int val;
+        
+        Pair(int li, ListNode node, int val){
+            this.li = li;
+            this.node = node;
+            this.val = val;
         }
-        l2.next = merge(l1, l2.next);
-        return l2;
+        public int compareTo(Pair O){
+            return this.val-O.val;
+        }
+    }
+    
+    public ListNode mergeKLists(ListNode[] lists) {
+        
+        if(lists.length==0){
+            ListNode node=null;
+            return node;
+        }
+        
+        ListNode head = new ListNode();
+        ListNode temp = head;
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        for(int i=0;i<lists.length;i++){
+            if(lists[i]==null){
+                continue;
+            }
+            Pair p = new Pair(i,lists[i],lists[i].val);
+            pq.add(p);
+        }
+        if(pq.size()==0){
+            ListNode node=null;
+            return node;
+        }
+        while(pq.size()>0){
+            Pair p = pq.remove();
+            // System.out.println(p.val);
+            temp.val=p.val;
+            if(pq.size()!=0 || p.node.next!=null){
+                ListNode t = new ListNode();
+                temp.next = t;
+                temp=temp.next;
+            }
+            p.node=p.node.next;
+            if(p.node!=null){
+                p.val = p.node.val;
+                pq.add(p);
+                
+            }
+        }
+        return head;
     }
 }
+                   
