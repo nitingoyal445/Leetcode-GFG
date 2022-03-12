@@ -9,6 +9,7 @@
  * }
  */
 class Solution {
+    //middle-2 means for even size - right side mid we have to consider
     public ListNode middleNode(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
