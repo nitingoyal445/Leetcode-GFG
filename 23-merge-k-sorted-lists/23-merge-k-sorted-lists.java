@@ -11,17 +11,13 @@
 class Solution {
     
     class Pair implements Comparable<Pair>{
-        int li;
         ListNode node;
-        int val;
         
-        Pair(int li, ListNode node, int val){
-            this.li = li;
+        Pair(ListNode node){
             this.node = node;
-            this.val = val;
         }
         public int compareTo(Pair O){
-            return this.val-O.val;
+            return this.node.val-O.node.val;
         }
     }
     
@@ -36,33 +32,23 @@ class Solution {
         ListNode temp = head;
         PriorityQueue<Pair> pq = new PriorityQueue<>();
         for(int i=0;i<lists.length;i++){
-            if(lists[i]==null){
-                continue;
+            if(lists[i]!=null){
+                pq.add(new Pair(lists[i]));
             }
-            Pair p = new Pair(i,lists[i],lists[i].val);
-            pq.add(p);
         }
         if(pq.size()==0){
             ListNode node=null;
             return node;
         }
         while(pq.size()>0){
-            Pair p = pq.remove();
-            // System.out.println(p.val);
-            temp.val=p.val;
-            if(pq.size()!=0 || p.node.next!=null){
-                ListNode t = new ListNode();
-                temp.next = t;
-                temp=temp.next;
-            }
-            p.node=p.node.next;
-            if(p.node!=null){
-                p.val = p.node.val;
-                pq.add(p);
-                
+            Pair rem = pq.remove();
+            temp.next=rem.node;
+            temp = temp.next;
+            if(rem.node.next!=null){
+                pq.add(new Pair(rem.node.next));
             }
         }
-        return head;
+        return head.next;
     }
 }
                    
