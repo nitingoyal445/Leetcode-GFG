@@ -24,7 +24,7 @@ class Solution {
             indx++;
         }
         int eleCount = indx-inSt;
-        root.left = constructTree(post, in, postSt, postSt + eleCount-1, inSt, indx);
+        root.left = constructTree(post, in, postSt, postSt + eleCount-1, inSt, indx-1);
         root.right = constructTree(post, in, postSt + eleCount, postEnd-1, indx+1, inEnd);
         return root;
     }
