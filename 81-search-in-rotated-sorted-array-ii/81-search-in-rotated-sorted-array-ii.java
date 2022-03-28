@@ -9,7 +9,7 @@ class Solution {
                 return true;
             }
             else if(nums[mid]> nums[hi]) { // left part is sorted
-                // if(target>nums[hi] && target < nums[lo]) return false;
+                if(target>nums[hi] && target < nums[lo]) return false;
                 if(target>=nums[lo] && target<nums[mid]){
                     hi = mid-1;
                 }else{
@@ -17,7 +17,7 @@ class Solution {
                 }
             }
             else if(nums[mid]<nums[lo]){
-                // if(target>nums[hi] && target < nums[lo]) return false;
+                if(target>nums[hi] && target < nums[lo]) return false;
                 if(target<=nums[hi] && target>nums[mid]){
                     lo = mid+1;
                 }else{
