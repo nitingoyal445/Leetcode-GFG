@@ -1,38 +1,31 @@
 class Solution {
+    
+    public void swap(int[] nums, int a, int b){
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
     public void nextPermutation(int[] nums) {
-        int n = nums.length;
+        if(nums.length ==1){
+            return;
+        }
+        int i=nums.length-1;
         
-        int i = n - 2;
-        
-        //Scan for the first decreasing number from right;
-        while(i >= 0 && nums[i + 1] <= nums[i]){
+        while(i>0 && nums[i-1]>=nums[i]){
             i--;
         }
-        
-        //If found, find the just greater number from the smaller number;
-        if(i >= 0){
-            int j = n-1;
-            
-            while(nums[j] <= nums[i]){
-                j--;
-            }
-            
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
+        if(i>0){
+            int curr_index = i-1;
+            int j = nums.length-1;
+            while(j>i && nums[j]<=nums[curr_index]) j--;
+            swap(nums, curr_index, j);
         }
-        
-        //Reverse the numbers after the swapped number;
-        int st = i + 1;
-        int ed = n - 1;
-        
-        while(st < ed){
-            int temp = nums[st];
-            nums[st] = nums[ed];
-            nums[ed] = temp;
-            
-            st++;
-            ed--;
+        int low = i;
+        int high = nums.length-1;
+        while(low<high){
+            swap(nums, low, high);
+            low++;
+            high--;
         }
     }
 }
