@@ -1,25 +1,25 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
-        int n = graph.length;
-        int[] colors = new int[n];			
-				
-        for (int i = 0; i < n; i++) {              //This graph might be a disconnected graph. So check each unvisited node.
-            if (colors[i] == 0 && !validColor(graph, colors, 1, i)) {
-                return false;
+        
+        int[] color = new int[graph.length];
+        for(int i=0;i<graph.length;i++){
+            if(color[i]!=0) continue;
+            
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(i);
+            color[i] = 1;
+            while(!queue.isEmpty()){
+                Integer node = queue.remove();
+                for(int n : graph[node]){
+                    if(color[n] == color[node]) return false;
+                    else if(color[n]==0){
+                        color[n] = -color[node];
+                        queue.add(n);
+                    }
+                }
+                
             }
-        }
-        return true;
-    }
-    
-    public boolean validColor(int[][] graph, int[] colors, int color, int node) {
-        if (colors[node] != 0) {
-            return colors[node] == color;
-        }       
-        colors[node] = color;       
-        for (int next : graph[node]) {
-            if (!validColor(graph, colors, -color, next)) {
-                return false;
-            }
+              
         }
         return true;
     }
