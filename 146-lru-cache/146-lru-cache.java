@@ -1,28 +1,53 @@
 class LRUCache {
-    
     class Node{
         int key;
-        int value;
+        int val;
         Node prev;
         Node next;
         
-        Node(int key, int value){
-        this.key = key;
-        this.value = value;
-        this.prev=this.next=null;
+        Node(int key, int val){
+            this.key = key;
+            this.val = val;
+            this.prev=this.next=null;
         }
     }
-    
+  
     HashMap<Integer, Node> map = null;
+    private int size = 0;
+    private int cap = 0;
     private Node head = null;
     private Node tail = null;
-    private int size=0;
-    private int cap=0;
-    
+      
+    private int removeFirst(){
+        Node rem = this.head;
+        this.head = this.head.next;
+        head.prev = null;
+        rem.next = null;
+        this.size--;
+        return rem.key;
+    }
+    private void removeNode(Node node){
+        if(this.size == 1){
+            this.head = this.tail = null;
+        }else if(node == this.head){
+            this.head = this.head.next;
+            this.head.prev = null;
+        }else if(node == this.tail){
+            this.tail = this.tail.prev;
+            this.tail.next = null;
+        }else{
+            Node n1 = node.prev;
+            Node n2 = node.next;
+            n1.next = n2;
+            n2.prev = n1;
+            node.prev = node.next = null;
+        }
+        this.size--;
+    }
     private void addLast(Node node){
         if(this.size==0){
-            this.head = this.tail=node;
-            this.size = 1;
+            this.head = this.tail = node;
+            this.size=1;
         }else{
             this.tail.next = node;
             node.prev = tail;
@@ -30,36 +55,6 @@ class LRUCache {
             size++;
         }
     }
-    private void removeNode(Node node){
-        if(this.size == 1){
-            this.head = this.tail = null;
-        }
-        else if(node == this.head){
-            this.head = head.next;
-            this.head.prev = null;
-        }else if(node == this.tail){
-            this.tail = tail.prev;
-            this.tail.next = null;
-        }else{
-            Node n1 = node.prev;
-            Node n2 = node.next;
-            n1.next = n2;
-            n2.prev=n1;
-            node.next = node.prev = null;
-        }
-        this.size--;
-        
-    }
-    public int removeFirst(){
-        //there is always more than one element
-        Node rem = head;
-        head = head.next;
-        head.prev = null;
-        rem.next = null;
-        this.size--;
-        return rem.key;
-    }
-    
 
     public LRUCache(int capacity) {
         this.cap = capacity;
@@ -69,9 +64,9 @@ class LRUCache {
     public int get(int key) {
         if(map.containsKey(key)){
             //get value
-            int val = map.get(key).value;
+            int val = map.get(key).val;
             //set it on top
-            this.put(key, val);
+            this.put(key,val);
             return val;
         }else{
             return -1;
@@ -79,25 +74,21 @@ class LRUCache {
     }
     
     public void put(int key, int value) {
-        
         if(map.containsKey(key)){
-            //updation
             Node node = map.get(key);
-            node.value = value;
+            node.val = value;
             this.removeNode(node);
-            this.addLast(node);   
+            this.addLast(node);
         }else{
             //addition of next key-value
             Node node = new Node(key, value);
             map.put(key, node);
             this.addLast(node);
-            
             if(this.size > cap){
-                int removalKey = this.removeFirst();
-                map.remove(removalKey);
+                int remKey = this.removeFirst();
+                map.remove(remKey);
             }
         }
-        
     }
 }
 
