@@ -1,4 +1,6 @@
 class Solution {
+    //self
+    //approch - create stack with pair and check if on stack peek pair with same char is present. if present then increase the count and if count equals to k then remove it from stack. at the end whatever left in stack make new string and and in that till stack is not empty
     class Pair{
         char ch;
         int count;
