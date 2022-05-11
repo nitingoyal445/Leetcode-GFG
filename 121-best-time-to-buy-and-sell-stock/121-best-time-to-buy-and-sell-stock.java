@@ -3,25 +3,23 @@ class Solution {
         
         int[] buy = new int[prices.length];
         int min = prices[0];
-        for(int i=0;i<buy.length;i++){
-            min = Math.min(prices[i],min);
+        for(int i=0;i<prices.length;i++){
+            min = Math.min(prices[i], min);
             buy[i] = min;
         }
-        int max = prices[prices.length-1];
         int[] sell = new int[prices.length];
-        
-        for(int i=prices.length-1;i>=0; i--){
-            max = Math.max(prices[i],max);
+        int max = prices[prices.length-1];
+        for(int i=prices.length-1; i>=0; i--){
+            max = Math.max(prices[i], max);
             sell[i] = max;
         }
-        int maxProfit = Integer.MIN_VALUE;
-        
-        for(int i=0;i<buy.length;i++){
-            int profit = sell[i]-buy[i];
-            if(profit>maxProfit){
-                maxProfit = profit;
+        int max_profit = Integer.MIN_VALUE;
+        for(int i=0; i<prices.length; i++){
+            int profit = sell[i] - buy[i];
+            if(profit>max_profit){
+                max_profit = profit;
             }
         }
-        return maxProfit;
+        return max_profit;
     }
 }
