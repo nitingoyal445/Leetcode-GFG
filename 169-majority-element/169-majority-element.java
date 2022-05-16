@@ -5,17 +5,14 @@ class Solution {
         for(int i=1;i<nums.length;i++){
             if(nums[i] == major){
                 count++;
-            }
-            else{
+            }else{
                 if(count>0){
                     count--;
-                }
-                else{
+                }else{
                     major = nums[i];
                     count = 1;
                 }
             }
-            
         }
         return major;
     }
