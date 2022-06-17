@@ -40,7 +40,6 @@ class Solution {
         }
         
     }
-    
     public int minCameraCover(TreeNode root) {
         camera = 0;
         int finalState = countCameraNeeded(root);
